@@ -1,0 +1,46 @@
+  .team-title {
+    margin: 20px;
+  }
+
+  .title-container {
+    margin: 50px;
+    text-align: center;
+  }
+  
+  .teams_container {
+    text-align: center;
+    display: grid;
+    justify-items: center;
+    place-items: center;
+    // grid-template-rows: repeat(5, 1fr);
+    grid-template-columns: repeat(2, 1fr); 
+    column-gap: 20px;
+    row-gap: 35px;
+    margin: 20px;
+
+
+    .card {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      min-width: 200px;
+      min-height: 140px;
+    }
+
+    @media (min-width: 768px) {
+      grid-template-columns: repeat(3, 1fr); 
+    }
+
+    @media (min-width: 960px) {
+      grid-template-columns: repeat(4, 1fr); 
+    }
+
+    @media (min-width: 1200px) {
+      grid-template-columns: repeat(5, 1fr); 
+    }
+  }
+
+.link {
+  text-decoration: inherit;
+  color: black;
+}
