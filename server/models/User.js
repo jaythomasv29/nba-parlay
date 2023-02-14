@@ -1,4 +1,5 @@
-const mongoose = require("mongoose")
+const mongoose = require("mongoose");
+const Team = require("./Team");
 
 const userSchema = new mongoose.Schema({
   email: {
@@ -12,8 +13,12 @@ const userSchema = new mongoose.Schema({
     required: true
   },
   favoriteTeams: [{
-    type: String,
-    default: "Team",
+    id: Number,
+    name: String,
+    code: String,
+    city: String,
+    conference: String,
+    logo: String
   }],
 })
 

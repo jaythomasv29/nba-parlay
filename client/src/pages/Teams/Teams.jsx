@@ -1,13 +1,16 @@
-import { Button, Card, CardActions, CardContent, Typography } from '@mui/material';
+import { Button, Card, CardActions, CardContent, Tooltip, Typography } from '@mui/material';
 import axios from 'axios';
-import React, { useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
-
+import { AuthContext } from '../../components/context/authContext';
+import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
+import CheckIcon from '@mui/icons-material/Check';
 import "./Teams.scss"
 
 const Teams = () => {
-
   const [teams, setTeams] = useState([]);
+  const { currentUser, setCurrentUser } = useContext(AuthContext);
+  console.log(currentUser)
   useEffect(() => {
     const getNbaTeams = async () => {
       try {
@@ -21,6 +24,35 @@ const Teams = () => {
     }
     getNbaTeams()
   }, [])
+
+  const isNotInFavorites = (team) => {
+    // const foundTeam = currentUser?.favoriteTeams.find(t => {
+    //   return t._id === team._id
+    // })
+    // return foundTeam === undefined
+    const foundTeam = currentUser.favoriteTeams.filter(t => (t.id === team.id))
+    return !foundTeam.length;
+  }
+
+  const handleAddTeam = async (team) => {
+    try {
+      console.log(team)
+      const response = await axios.post(`/users/addTeam/${currentUser._id}`, team)
+
+      setCurrentUser(response.data)
+    } catch (err) {
+      console.log(err)
+    }
+  }
+  const handleRemoveTeam = async (team) => {
+    try {
+      const response = await axios.delete(`/users/removeTeam/${currentUser._id}`, { data: { teamId: team.id } })
+      console.log(team.id)
+      setCurrentUser(response.data)
+    } catch (err) {
+      console.log(err)
+    }
+  }
   return (
     <div>
       <div className='title-container'>
@@ -31,7 +63,19 @@ const Teams = () => {
         {teams.map((team) => (
 
           <Card className="card" key={team.id}>
-            <Link  to={`/teams/${team.id}`} className="link" state={team}>
+            {
+              currentUser && isNotInFavorites(team) ?
+                <Tooltip title="Add to favorites">
+                  <AddCircleOutlineIcon onClick={() => handleAddTeam(team)} className='team-btn' />
+                </Tooltip>
+                :
+                <Tooltip title="Click to remove">
+                  {/* <AddCircleOutlineIcon onClick={() => handleAddTeam(team)} className='team-btn' /> */}
+                  <CheckIcon onClick={() => handleRemoveTeam(team)} style={{ color: "green" }} className='team-btn' />
+                </Tooltip>
+
+            }
+            <Link to={`/teams/${team.id}`} className="link" state={team}>
               <img src={team.logo} alt={`${team.team}_logo`} />
               <div className="card-info__container">
                 <Typography variant="body" component="div">{team.name}</Typography>

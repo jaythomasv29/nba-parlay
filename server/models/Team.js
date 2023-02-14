@@ -21,6 +21,10 @@ const teamSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+  isFavorite: {
+    type: Boolean,
+    default: false,
+  }
 });
 
 module.exports = mongoose.model("Team", teamSchema);

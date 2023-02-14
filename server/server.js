@@ -6,6 +6,7 @@ const { getTeamsFromLeague } = require("./axiosConfig");
 const db = require("./db");
 const teamRoutes = require("./routes/teamRoutes");
 const authRoutes = require("./routes/authRoutes");
+const userRoutes = require("./routes/userRoutes");
 const { default: mongoose } = require("mongoose");
 const connectDB = require("./dbConn");
 const Team = require("./models/Team");
@@ -18,6 +19,7 @@ app.use(cors());
 app.use(cookieParser());
 
 app.use("/api/auth", authRoutes);
+app.use("/api/users", userRoutes);
 app.use("/api/teams", teamRoutes);
 app.get("/saveTeams", async (req, res) => {
   const teams = await getTeamsFromLeague();
@@ -39,7 +41,7 @@ app.get("/saveTeams", async (req, res) => {
     .map((team) => {
       const { id, name, code, city, logo } = team;
       const conference = team.leagues.standard.conference;
-      return { id, name, code, city, logo, conference };
+      return { id, name, code, city, logo, conference, isFavorite: false };
     });
   try {
     const data = await Team.collection.insertMany(nbaTeams);

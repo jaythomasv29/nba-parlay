@@ -25,6 +25,19 @@
       justify-content: center;
       min-width: 200px;
       min-height: 140px;
+      position: relative;
+
+      .team-btn {
+        color: grey;
+        position: absolute;
+        top: 0;
+        right: 0;
+        cursor: pointer;
+
+        &:hover {
+          color: #1976D2;
+        }
+      }
     }
 
     @media (min-width: 768px) {
