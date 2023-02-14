@@ -1,0 +1,57 @@
+.game-card {
+  display: flex;
+  text-align: center;
+  justify-content: center;
+  gap: 50px;
+  align-items: center;
+  border: 1px solid whitesmoke;
+  
+  .versus-container {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  label {
+    
+    width: 200px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    
+  }
+
+  /* HIDE RADIO */
+  [type=radio] {
+    position: absolute;
+    opacity: 0;
+    width: 0;
+    height: 0;
+  }
+
+  /* IMAGE STYLES */
+  [type=radio]+img {
+    cursor: pointer;
+  }
+
+  /* CHECKED STYLES */
+  [type=radio]:checked+img {
+    // outline: 2px solid rgb(212, 234, 247);
+    background-color: #98c2ec;
+
+  }
+
+}
+
+.team-img {
+  display: flex;
+  justify-content: center;
+  // width: 60px;
+  height: 35px;
+  margin: 5px;
+  object-fit: fill;
+  padding: 15px 60px;
+
+  border-radius: 10%;
+}

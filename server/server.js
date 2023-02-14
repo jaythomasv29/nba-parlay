@@ -5,6 +5,7 @@ const PORT = process.env.PORT;
 const { getTeamsFromLeague } = require("./axiosConfig");
 const db = require("./db");
 const teamRoutes = require("./routes/teamRoutes");
+const gameRoutes = require("./routes/gameRoutes");
 const authRoutes = require("./routes/authRoutes");
 const userRoutes = require("./routes/userRoutes");
 const { default: mongoose } = require("mongoose");
@@ -21,6 +22,8 @@ app.use(cookieParser());
 app.use("/api/auth", authRoutes);
 app.use("/api/users", userRoutes);
 app.use("/api/teams", teamRoutes);
+app.use("/api/games", gameRoutes);
+
 app.get("/saveTeams", async (req, res) => {
   const teams = await getTeamsFromLeague();
   // console.log(teams);
