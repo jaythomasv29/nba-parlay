@@ -6,7 +6,8 @@ import Register from "./pages/Register/Register";
 import Login from "./pages/Login/Login";
 import Team from "./pages/Team/Team";
 import Teams from "./pages/Teams/Teams";
-
+import ParlayHistory from "./pages/ParlayHistory/ParlayHistory";
+import Parlay from "./pages/ParlayHistory/Parlay";
 
 const router = createBrowserRouter([
   {
@@ -24,6 +25,16 @@ const router = createBrowserRouter([
       {
         path: "/teams/:id",
         element: <Team />
+      },
+      {
+        path: "/parlays",
+        element: <ParlayHistory />,
+        children: [
+          {
+            path:"/parlays/:parlayId",
+            element: <Parlay />
+          }
+        ]
       },
       {
         path: "/register",

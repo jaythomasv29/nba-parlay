@@ -16,8 +16,6 @@ const Team = () => {
   const team = (location.state);
   const [fiveYearTeamStats, setFiveYearTeamStats] = useState([]);
   const [players, setPlayers] = useState([]);
-  console.log(team);
-
 
   useEffect(() => {
 
@@ -34,7 +32,6 @@ const Team = () => {
     const getCurrentPlayersOnTeam = async () => {
       const response = await axios.get(`/teams/${team.id}/players`)
       const players = response.data.response;
-      console.log(players)
       setPlayers(players);
     }
     getCurrentPlayersOnTeam()

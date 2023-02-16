@@ -10,12 +10,10 @@ import "./Teams.scss"
 const Teams = () => {
   const [teams, setTeams] = useState([]);
   const { currentUser, setCurrentUser } = useContext(AuthContext);
-  console.log(currentUser)
   useEffect(() => {
     const getNbaTeams = async () => {
       try {
         const response = await axios.get("/teams")
-        console.log(response)
         setTeams(response.data)
 
       } catch (err) {
@@ -36,7 +34,6 @@ const Teams = () => {
 
   const handleAddTeam = async (team) => {
     try {
-      console.log(team)
       const response = await axios.post(`/users/addTeam/${currentUser._id}`, team)
 
       setCurrentUser(response.data)
@@ -47,7 +44,6 @@ const Teams = () => {
   const handleRemoveTeam = async (team) => {
     try {
       const response = await axios.delete(`/users/removeTeam/${currentUser._id}`, { data: { teamId: team.id } })
-      console.log(team.id)
       setCurrentUser(response.data)
     } catch (err) {
       console.log(err)

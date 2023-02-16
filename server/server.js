@@ -24,9 +24,9 @@ app.use("/api/users", userRoutes);
 app.use("/api/teams", teamRoutes);
 app.use("/api/games", gameRoutes);
 
+
 app.get("/saveTeams", async (req, res) => {
   const teams = await getTeamsFromLeague();
-  // console.log(teams);
 
   const nbaTeams = teams
     .filter((team) => {

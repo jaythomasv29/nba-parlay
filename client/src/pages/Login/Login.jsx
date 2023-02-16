@@ -49,7 +49,6 @@ const Login = () => {
       // If user is created successfully in database
       if (response.status === 200) {
         // set user in context
-        console.log(response.data)
         navigate("/")
 
       }
@@ -59,7 +58,6 @@ const Login = () => {
     }
 
   }
-  console.log(loginFormFields)
 
   return (
     <Grid sx={{ display: "flex", flexDirection: "column", justifyContent: "center" }}>
