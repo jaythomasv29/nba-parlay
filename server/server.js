@@ -16,7 +16,6 @@ const cookieParser = require("cookie-parser");
 
 const app = express();
 
-app.use(express.static(path.join(__dirname, "../client", "build")))
 app.use(express.json());
 app.use(cors());
 app.use(cookieParser());
@@ -26,10 +25,18 @@ app.use("/users", userRoutes);
 app.use("/teams", teamRoutes);
 app.use("/games", gameRoutes);
 
+if(process.env.NODE_ENV === "production") {
 
-app.get("/", (req, res) => {
-  res.sendFile(path.join(__dirname, "../client", "build", "index.html"))
-})
+  
+  app.use(express.static(path.join(__dirname, "../client", "build")))
+  app.get("/", (req, res) => {
+    res.sendFile(path.join(__dirname, "../client", "build", "index.html"))
+  })
+} else {
+  app.get("/", (req, res) => {
+    res.json("JSON server is working")
+  })
+}
 
 app.get("/saveTeams", async (req, res) => {
   const teams = await getTeamsFromLeague();

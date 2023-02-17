@@ -71,6 +71,7 @@ const getCurrentPlayersOfTeam = async (req, res) => {
     const response = await instance.get(
       `/players?team=${teamId}&season=${currentYear - 1}`
     );
+    console.log(response.data)
     res.json(response.data);
   } catch (err) {
     console.log(err);
