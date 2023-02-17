@@ -52,6 +52,7 @@ const Register = () => {
       // If user is created successfully in database
       if (response.status === 201) {
         // set user in context
+        console.log(response.data)
         navigate("/")
 
       }
@@ -61,6 +62,7 @@ const Register = () => {
     }
 
   }
+  console.log(registerFormFields)
 
   return (
     <Grid sx={{ display: "flex", flexDirection: "column", justifyContent: "center" }}>

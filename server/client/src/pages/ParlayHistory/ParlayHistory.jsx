@@ -8,12 +8,11 @@ import "./ParlayHistory.scss"
 const ParlayHistory = () => {
   const params = useParams();
   const location = useLocation()
-  console.log(location)
   const { currentUser } = useContext(AuthContext);
   const [userParlays, setUserParlays] = useState([])
   useEffect(() => {
     const getUserParlays = async () => {
-      const response = await axios.get(`api/games/parlays/${currentUser._id}`)
+      const response = await axios.get(`games/parlays/${currentUser._id}`);
       setUserParlays(response.data)
     }
     getUserParlays();

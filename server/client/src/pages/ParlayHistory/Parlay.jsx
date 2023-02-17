@@ -16,11 +16,11 @@ const Parlay = () => {
   console.log(parlayDetails)
   useEffect(() => {
     const getParlayById = async () => {
-      const response = await axios.get(`api/games/parlays/${currentUser._id}/${params.parlayId}`)
+      const response = await axios.get(`games/parlays/${currentUser._id}/${params.parlayId}`)
       setParlayDetails(response.data)
     }
     getParlayById()
-  }, [params.parlayId])
+  }, [])
 
   return (
     <div>

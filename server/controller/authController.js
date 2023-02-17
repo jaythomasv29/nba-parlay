@@ -53,6 +53,7 @@ const loginUser = async (req, res) => {
     return res
       .status(400)
       .json({ message: "Invalid credentials. Wrong username or password" });
+  console.log(jwtSecretKey);
   const token = jwt.sign({ id: foundUser._id }, jwtSecretKey);
   const { password, ...userDetails } = foundUser;
   res

@@ -26,12 +26,16 @@ app.use("/api/users", userRoutes);
 app.use("/api/teams", teamRoutes);
 app.use("/api/games", gameRoutes);
 
-app.get("/", (req, res) => {
-  res.sendFile(path.join(__dirname, "client", "build", "index.html"))
-})
+// <<<<<<< HEAD
+// app.get("/", (req, res) => {
+//   res.sendFile(path.join(__dirname, "client", "build", "index.html"))
+// })
 
+// =======
+// >>>>>>> parent of 08c2d09 (add feature to check parlays, save parlays, and query the backend at an interval to automatically update parlay results)
 app.get("/saveTeams", async (req, res) => {
   const teams = await getTeamsFromLeague();
+  // console.log(teams);
 
   const nbaTeams = teams
     .filter((team) => {

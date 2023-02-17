@@ -20,6 +20,7 @@ export default function Navbar() {
   const [auth, setAuth] = React.useState(true);
   const [anchorEl, setAnchorEl] = React.useState(null);
   const { currentUser, logout } = useContext(AuthContext);
+  console.log(currentUser);
 
   const handleMenu = (event) => {
     setAnchorEl(event.currentTarget);
@@ -30,6 +31,10 @@ export default function Navbar() {
     navigate("/login")
 
   }
+
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
 
   return (
     <Box sx={{ flexGrow: 1 }}>
@@ -46,8 +51,8 @@ export default function Navbar() {
               {
                 currentUser ?
                   <>
-                    <MenuItem ><Link className="nav-link" to="/parlays">My Parlays</Link></MenuItem>
-                    <MenuItem onClick={handleLogout}>Logout</MenuItem>
+                      <MenuItem onClick={handleClose}>Profile</MenuItem>
+                      <MenuItem onClick={handleLogout}>Logout</MenuItem>
                   </>
                   :
                   <MenuItem><Link to="/login" className="nav-link">Login</Link></MenuItem>

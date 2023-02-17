@@ -1,0 +1,15 @@
+.tile-container {
+  // height: 400px;
+  // background-color: grey;
+  border: 1px solid lightgray;
+  border-radius: 5px;
+  // width: 400px;
+  margin: 50px 5px;
+
+  flex: 1;
+}
+
+#gamesPlayed, #pointsPerSeason {
+  width: 100%;
+  height: 100%;
+}

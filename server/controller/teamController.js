@@ -26,6 +26,7 @@ const getTeamStats = async (req, res) => {
       const URL = `https://api-nba-v1.p.rapidapi.com/teams/statistics?season=${i}&id=${teamId}`;
       URLs.push(URL);
     }
+    console.log(URLs);
     try {
       const fiveYearStatsOfTeam = await Promise.all(
         URLs.map(async (url) => {
@@ -36,6 +37,7 @@ const getTeamStats = async (req, res) => {
                 "x-rapidapi-key": process.env.NBA_API_KEY,
               },
             });
+            // console.log(response.data)
             return response.data;
           } catch (err) {
             console.log(err);
@@ -49,6 +51,7 @@ const getTeamStats = async (req, res) => {
         const stats = response[0];
         return { season, stats };
       });
+      console.log(fiveYearStatsOfTeam);
       const savedStats = await Stat.create({
         teamId: fiveYearStatsOfTeam[0].parameters.id,
         teamStats,
@@ -63,6 +66,7 @@ const getTeamStats = async (req, res) => {
 const getCurrentPlayersOfTeam = async (req, res) => {
   const teamId = req.params.id;
   const currentYear = new Date().getFullYear();
+  console.log(teamId, currentYear);
   try {
     const response = await instance.get(
       `/players?team=${teamId}&season=${currentYear - 1}`
