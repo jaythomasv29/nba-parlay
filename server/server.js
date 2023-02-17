@@ -1,9 +1,10 @@
 const express = require("express");
+const path = require('path')
 const dotenv = require("dotenv").config();
 const cors = require("cors");
 const PORT = process.env.PORT;
 const { getTeamsFromLeague } = require("./axiosConfig");
-const db = require("./db");
+
 const teamRoutes = require("./routes/teamRoutes");
 const gameRoutes = require("./routes/gameRoutes");
 const authRoutes = require("./routes/authRoutes");
@@ -15,6 +16,7 @@ const cookieParser = require("cookie-parser");
 
 const app = express();
 
+app.use(express.static(path.join(__dirname, "client", "build")))
 app.use(express.json());
 app.use(cors());
 app.use(cookieParser());
@@ -24,6 +26,9 @@ app.use("/api/users", userRoutes);
 app.use("/api/teams", teamRoutes);
 app.use("/api/games", gameRoutes);
 
+app.get("/", (req, res) => {
+  res.sendFile(path.join(__dirname, "client", "build", "index.html"))
+})
 
 app.get("/saveTeams", async (req, res) => {
   const teams = await getTeamsFromLeague();

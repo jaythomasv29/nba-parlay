@@ -77,9 +77,9 @@ const updateAllParlays = async () => {
 /**
  * Update parlays periodically in background
  */
-// setTimeout(() => {
+setInterval(() => {
 updateAllParlays();
-// }, 1000)
+}, 300000)
 
 const checkWinner = (game) => {
   return game?.scores.home.points > game?.scores.visitors.points

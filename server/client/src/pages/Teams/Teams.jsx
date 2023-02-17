@@ -13,7 +13,7 @@ const Teams = () => {
   useEffect(() => {
     const getNbaTeams = async () => {
       try {
-        const response = await axios.get("/teams")
+        const response = await axios.get("api/teams")
         setTeams(response.data)
 
       } catch (err) {
@@ -34,7 +34,7 @@ const Teams = () => {
 
   const handleAddTeam = async (team) => {
     try {
-      const response = await axios.post(`/users/addTeam/${currentUser._id}`, team)
+      const response = await axios.post(`api/users/addTeam/${currentUser._id}`, team)
 
       setCurrentUser(response.data)
     } catch (err) {
@@ -43,7 +43,7 @@ const Teams = () => {
   }
   const handleRemoveTeam = async (team) => {
     try {
-      const response = await axios.delete(`/users/removeTeam/${currentUser._id}`, { data: { teamId: team.id } })
+      const response = await axios.delete(`api/users/removeTeam/${currentUser._id}`, { data: { teamId: team.id } })
       setCurrentUser(response.data)
     } catch (err) {
       console.log(err)

@@ -1,4 +1,3 @@
-const db = require("../db");
 const axios = require("axios");
 const Stat = require("../models/Stat");
 const Team = require("../models/Team");

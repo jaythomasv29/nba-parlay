@@ -1,0 +1,17 @@
+version: "3.8"
+services:
+  api:
+    build:
+      dockerfile: Dockerfile
+      context: ./server 
+    ports:
+      - "4001:4001"
+    volumes:
+      - "/app/node_modules"
+      - "./server:/app"
+    environment:
+      - PORT=4001
+      - DATABASE_URI=mongodb+srv://jamesvongampai:q7uBNAD6EjO1tcGf@cluster0.xwkdohr.mongodb.net/?retryWrites=true&w=majority
+      - NBA_API_KEY=d834dcc8e2msh4630b2da619145bp14df2djsn757d0ecd5385
+      - JWTSECRETKEY=H3w4b76sagdsd
+

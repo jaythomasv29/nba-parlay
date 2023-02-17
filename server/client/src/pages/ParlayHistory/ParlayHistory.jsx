@@ -13,7 +13,7 @@ const ParlayHistory = () => {
   const [userParlays, setUserParlays] = useState([])
   useEffect(() => {
     const getUserParlays = async () => {
-      const response = await axios.get(`/games/parlays/${currentUser._id}`)
+      const response = await axios.get(`api/games/parlays/${currentUser._id}`)
       setUserParlays(response.data)
     }
     getUserParlays();

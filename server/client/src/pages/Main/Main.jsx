@@ -24,7 +24,7 @@ const Main = () => {
   
   
     try {
-      const response = await axios.post(`/games/parlays/${currentUser._id}`, values)
+      const response = await axios.post(`api/games/parlays/${currentUser._id}`, values)
       navigate("/parlays")
     } catch (err) {
       console.log(err)
@@ -46,7 +46,7 @@ const Main = () => {
 
   useEffect(() => {
     const getTodayNbaGames = async () => {
-      const response = await axios.get("/games/today")
+      const response = await axios.get("api/games/today")
       const games = response.data
       for (const obj of games) {
         DEFAULT_DAILY_PARLAY[obj["id"]] = ""

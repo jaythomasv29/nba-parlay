@@ -20,7 +20,7 @@ const Team = () => {
   useEffect(() => {
 
     const get5YearTeamStats = async () => {
-      const response = await axios.get(`/teams/${team.id}/stats`);
+      const response = await axios.get(`api/teams/${team.id}/stats`);
       const data = response.data;
 
       setFiveYearTeamStats(data)
@@ -30,7 +30,7 @@ const Team = () => {
 
   useEffect(() => {
     const getCurrentPlayersOnTeam = async () => {
-      const response = await axios.get(`/teams/${team.id}/players`)
+      const response = await axios.get(`api/teams/${team.id}/players`)
       const players = response.data.response;
       setPlayers(players);
     }
