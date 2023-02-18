@@ -20,7 +20,7 @@ const dateRange = () => {
 }
 export const GameContextProvider = ({ children }) => {
   // game state that will store all games within the browser
-  const [games, setGames] = useState(JSON.parse(localStorage.getItem("nbaGames")).nbaGames ||null);
+  const [games, setGames] = useState(JSON.parse(localStorage.getItem("nbaGames"))?.nbaGames || []);
   const [gameDates, setGameDates] = useState([])
 
   useEffect(() => {
@@ -31,7 +31,7 @@ export const GameContextProvider = ({ children }) => {
       const currentLocalStorageGames = JSON.parse(localStorage.getItem("nbaGames"))
       try {
         // if the expiry time has passed -> then retrieve data and reset localStorage data to newly retrieved data
-        if(now.getTime() > new Date(currentLocalStorageGames.expiry).getTime() ) {
+        if(currentLocalStorageGames === null || now.getTime() > new Date(currentLocalStorageGames?.expiry).getTime() ) {
           const response = await axios.get("/games/season/all")
           localStorage.setItem("nbaGames", JSON.stringify({nbaGames: response.data.response, expiry: now.getTime() + EXPIRY_TIME}))
           setGames(response.data.response)
@@ -47,9 +47,9 @@ export const GameContextProvider = ({ children }) => {
   const getGamesByDate = (date) => {
     return games?.filter(game => {
       if (new Date(game.date.start).toDateString() === date.toDateString()) {
-        return game
+        return game;
       } else {
-        return;
+        return null;
       }
     }) 
   }

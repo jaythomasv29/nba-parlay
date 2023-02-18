@@ -40,8 +40,8 @@ const Main = () => {
 
   useEffect(() => {
     const getTodayNbaGames = async () => {
-      const date = new Date(location.pathname === "/" ? "" : location.pathname.slice(1))
-      const games = getGamesByDate(date)
+      const date = location?.pathname === "/" ? new Date() : new Date(location.pathname.slice(1))
+      const games = await getGamesByDate(date)
       
         for (const obj of games) {
           DEFAULT_DAILY_PARLAY[obj["id"]] = ""
