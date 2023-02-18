@@ -14,6 +14,8 @@ import Menu from '@mui/material/Menu';
 import "./Navbar.scss"
 import { Link, useNavigate } from 'react-router-dom';
 import { AuthContext } from '../context/authContext';
+import { Avatar } from '@mui/material';
+import { blue } from '@mui/material/colors';
 
 export default function Navbar() {
   const navigate = useNavigate();
@@ -35,6 +37,7 @@ export default function Navbar() {
     <Box sx={{ flexGrow: 1 }}>
       <AppBar position="static">
         <Toolbar>
+        <Avatar sx={{my: 1, mr: 2}}src="https://www.clipartmax.com/png/middle/134-1349206_nba-logo-png-transparent-background-nba-logo-transparent-background.png" variant="rounded" />
 
           <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
             NBA Parlay

@@ -1,0 +1,20 @@
+.date-box {
+  padding: 20px;
+  border: 1px solid lightgray;
+  color: black;
+  font-size: 12px;
+}
+
+.today {
+  border-color: #1976d27d;
+  border-width: 2px;
+  box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+  font-size: 12px;
+}
+
+.games-unavailable {
+  background-color: rgba(255, 0, 0, 0.312);
+}
+.games-available {
+  background-color: rgba(0, 128, 0, 0.263);
+}

@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from 'react';
-import { useLocation, useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import { AuthContext } from '../../components/context/authContext';
 import axios from "axios";
 import Game from '../../components/Game/Game';
@@ -8,7 +8,6 @@ import Chip from '@mui/joy/Chip';
 import { CssVarsProvider } from '@mui/joy/styles';
 
 const Parlay = () => {
-  const location = useLocation()
   const { currentUser } = useContext(AuthContext)
   const [parlayDetails, setParlayDetails] = useState({})
   const params = useParams()
@@ -20,8 +19,8 @@ const Parlay = () => {
       setParlayDetails(response.data)
     }
     getParlayById()
-  }, [params.parlayId])
-  
+  }, [params.parlayId, currentUser._id])
+
   console.log("shit")
   return (
     <div>
@@ -54,7 +53,7 @@ const Parlay = () => {
         !Object.values(parlayDetails?.parlay).some(game => game.scores.home.points === null && game.scores.visitors.points === null) &&
         <>
           {
-            parlayDetails?.isCompleteWinner ?
+            parlayDetails?.isCompleteParlayWinner ?
               <Typography sx={{ textAlign: "center", m: 2 }}>Congrats You Won!</Typography>
               :
               <Typography sx={{ textAlign: "center", m: 2 }}>Better Luck Next Time...</Typography>

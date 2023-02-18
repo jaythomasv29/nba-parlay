@@ -1,19 +1,35 @@
 const { instance } = require("../axiosConfig");
 const Parlay = require("../models/Parlays");
 
+const getGamesOfCurrentSeasonJSON = async (req, res) => {
+  try {
+    const games = await getGamesOfCurrentSeason();
+    res.json(games);
+  } catch (err) {
+    res
+      .status(500)
+      .json({ message: "Error retrieving all nba games of season" });
+  }
+};
+
 const getGamesOfCurrentSeason = async () => {
   const currentSeason = new Date().getFullYear() - 1;
-  console.log(currentSeason);
-  const response = await instance.get(`/games?season=${currentSeason}`);
-  return response.data;
+  try {
+    const response = await instance.get(`/games?season=${currentSeason}`);
+    return response.data;
+  } catch (err) {
+    return { message: "Error retrieving all nba games of season" };
+  }
 };
 
 const getDailyNBAGames = async (req, res) => {
-  const today = new Date();
+  console.log(req.params.date)
+  const today = new Date(req.params.date) || new Date();
+  console.log(today)
   const seasonGames = await getGamesOfCurrentSeason();
   console.log(`${today.getFullYear()}-${today.getMonth()}-${today.getDate()}`);
   const todayGames = seasonGames.response.filter((game) => {
-    const gameDate = new Date(game.date.start)
+    const gameDate = new Date(game.date.start);
     if (
       new Date(game.date.start) >
         new Date(
@@ -21,10 +37,11 @@ const getDailyNBAGames = async (req, res) => {
         ) &&
       new Date(game.date.start) <
         new Date(
-          `${today.getFullYear()}, ${today.getMonth() + 1}, ${today.getDate()} 23:59:00`
+          `${today.getFullYear()}, ${
+            today.getMonth() + 1
+          }, ${today.getDate()} 23:59:00`
         )
-      
-    ){
+    ) {
       return game;
     }
   });
@@ -79,8 +96,8 @@ const updateAllParlays = async () => {
  * Update parlays periodically in background
  */
 setInterval(() => {
-updateAllParlays();
-}, 300000)
+  updateAllParlays();
+}, 300000);
 
 const checkWinner = (game) => {
   return game?.scores.home.points > game?.scores.visitors.points
@@ -122,14 +139,12 @@ const getUserParlayById = async (req, res) => {
     console.log("Error retrieving parlay by id " + err);
     res.status(500).json({ message: "Error retrieving parlay by id ", err });
   }
-
 };
 
 module.exports = {
+  getGamesOfCurrentSeasonJSON,
   getDailyNBAGames,
   submitUserParlay,
   getUserParlayById,
   getAllUserParlays,
-
-
 };

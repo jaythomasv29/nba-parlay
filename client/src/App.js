@@ -8,6 +8,7 @@ import Team from "./pages/Team/Team";
 import Teams from "./pages/Teams/Teams";
 import ParlayHistory from "./pages/ParlayHistory/ParlayHistory";
 import Parlay from "./pages/ParlayHistory/Parlay";
+import Matches from "./components/Matches/Matches";
 
 const router = createBrowserRouter([
   {
@@ -16,7 +17,12 @@ const router = createBrowserRouter([
     children: [
       {
         path: "/",
-        element: <Main />
+        element: <Main />,
+        children: [
+          {
+          path: "/:id",
+          element: <Matches />}
+        ]
       },
       {
         path: "/teams",

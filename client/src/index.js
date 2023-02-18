@@ -5,13 +5,15 @@ import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 import { AuthContextProvider } from "./components/context/authContext";
 import "@fontsource/public-sans";
-import { CssVarsProvider } from "@mui/joy/styles";
+import { GameContextProvider } from "./components/context/gameContext";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
+  <GameContextProvider>
   <AuthContextProvider>
     <App />
   </AuthContextProvider>
+  </GameContextProvider>
 );
 
 // If you want to start measuring performance in your app, pass a function

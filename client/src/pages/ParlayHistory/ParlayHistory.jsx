@@ -1,16 +1,13 @@
 import { useContext, useEffect, useState } from 'react';
 import { AuthContext } from "../../components/context/authContext"
 import axios from "axios";
-import { Box, List, ListItem, ListItemText, ListSubheader, Typography } from '@mui/material';
-import { Link, Outlet, useLocation, useParams } from 'react-router-dom';
+import { Box, List, ListSubheader, Typography } from '@mui/material';
+import { Link, Outlet, useLocation } from 'react-router-dom';
 import "./ParlayHistory.scss"
 
 const ParlayHistory = () => {
-  const params = useParams();
   const location = useLocation()
-  console.log(location)
   const { currentUser } = useContext(AuthContext);
-  console.log(currentUser)
   const [userParlays, setUserParlays] = useState([])
   useEffect(() => {
     const getUserParlays = async () => {
@@ -18,7 +15,7 @@ const ParlayHistory = () => {
       setUserParlays(response.data)
     }
     getUserParlays();
-  }, [])
+  }, [currentUser._id])
   return (
     <div>
       <div className='parlay-title-container'>
@@ -34,15 +31,17 @@ const ParlayHistory = () => {
               position: 'relative',
               overflow: 'auto',
               maxHeight: 300,
-              '& ul': { padding: 0 },
+              my: 1,
+              '& li': { padding: 0 },
             }}
             subheader={<li />}
           >
 
             {userParlays && userParlays.map((parlay) => (
-              <div key={parlay._id}>
-                <ListSubheader sx={{ cursor: "pointer", "&:hover": { backgroundColor: "lightBlue" } }}><Link className="nav-link" to={`/parlays/${parlay._id}`}>{`${new Date(parlay.createdAt).toDateString()}`}</Link></ListSubheader>
-              </div>
+              <Link className=" nav-link" to={`/parlays/${parlay._id}`} key={parlay._id}>
+                <ListSubheader sx={{ border: "1px solid lightsmoke", m: 1, cursor: "pointer", "&:hover": { backgroundColor: "lightBlue" } }}>{`${new Date(parlay.createdAt).toDateString()}`}
+                </ListSubheader>
+              </Link>
             ))}
           </List>
         </Box>
