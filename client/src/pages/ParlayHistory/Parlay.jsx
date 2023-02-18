@@ -29,7 +29,7 @@ const Parlay = () => {
         // parlayDetails.isCompleteParlayWinner && Object.values(parlayDetails.status) parlayDetails != null && 
         // <Typography>You are {parlayDetails.isCompleteParlayWinner ? `a winner!` : `not a winner`}</Typography>
         parlayDetails.parlay != null &&
-          Object.values(parlayDetails?.parlay).some(game => game.scores.home.points === null && game.scores.visitors.points === null) ?
+          Object.values(parlayDetails?.parlay).some(game => game?.scores?.home?.points === null && game?.scores?.visitors.points === null) ?
           <CssVarsProvider>
             <Chip sx={{ my: 1, ml: 1 }}>Parlay in progress</Chip>
           </CssVarsProvider>
@@ -50,7 +50,7 @@ const Parlay = () => {
       }
       {
         parlayDetails.parlay != null &&
-        !Object.values(parlayDetails?.parlay).some(game => game.scores.home.points === null && game.scores.visitors.points === null) &&
+        !Object.values(parlayDetails?.parlay).some(game => game?.scores?.home?.points === null && game?.scores?.visitors?.points === null) &&
         <>
           {
             parlayDetails?.isCompleteParlayWinner ?

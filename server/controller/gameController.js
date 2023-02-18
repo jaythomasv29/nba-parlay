@@ -59,18 +59,20 @@ const updateAllParlays = async () => {
     const gameDate = new Date(parlays[i].createdAt);
     const specificGamesOnParlayDate = seasonGames.response.filter(
       (game) =>
-        new Date(game.date.start).toDateString() === gameDate.toDateString()
+        new Date(game.date.start).toDateString() === gameDate.toDateString() || Object.keys(parlay.parlay).some(gameId => Number(gameId) === game.id)
     );
     parlay.isParlay;
     Object.keys(parlay.parlay).forEach((gameKey) => {
       const foundGameResult = specificGamesOnParlayDate.find(
         (g) => g.id == gameKey
       );
+      parlay.parlay[gameKey].scores = foundGameResult?.scores;
+      parlay.parlay[gameKey].teams = foundGameResult?.teams;
+      parlay.parlay[gameKey].date = foundGameResult?.date;
       if (
         foundGameResult?.scores.home.points &&
         foundGameResult?.scores.visitors.points
       ) {
-        parlay.parlay[gameKey].scores = foundGameResult?.scores;
         parlay.parlay[gameKey].gameWinner = checkWinner(foundGameResult);
 
         if (
@@ -95,9 +97,10 @@ const updateAllParlays = async () => {
 /**
  * Update parlays periodically in background
  */
-setInterval(() => {
-  updateAllParlays();
-}, 300000);
+// updateAllParlays();
+// setInterval(() => {
+//   updateAllParlays();
+// }, 120000);
 
 const checkWinner = (game) => {
   return game?.scores.home.points > game?.scores.visitors.points
@@ -111,6 +114,7 @@ const submitUserParlay = async (req, res) => {
       userId: userId,
       parlay: parlayPicks,
     });
+    updateAllParlays()
     res.json(savedParlay);
   } catch (err) {
     console.log("Error saving parlay in database " + err);
@@ -147,4 +151,5 @@ module.exports = {
   submitUserParlay,
   getUserParlayById,
   getAllUserParlays,
+
 };

@@ -30,7 +30,7 @@ const ParlayHistory = () => {
               bgcolor: 'background.paper',
               position: 'relative',
               overflow: 'auto',
-              maxHeight: 300,
+              maxHeight: 900,
               my: 1,
               '& li': { padding: 0 },
             }}

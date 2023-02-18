@@ -43,6 +43,7 @@ const registerUser = async (req, res) => {
  * @returns HTTP response + JSON data
  */
 const loginUser = async (req, res) => {
+  console.log("backend login");
   const foundUser = await User.findOne({ email: req.body.email }).lean().exec();
   if (!foundUser) return res.status(404).json({ message: "User not found" });
   const isValidPassword = bcrypt.compareSync(

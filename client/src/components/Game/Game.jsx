@@ -1,4 +1,5 @@
 import { Tooltip, Typography } from '@mui/material'
+
 import { useLocation } from 'react-router-dom'
 import "./Game.scss"
 
@@ -35,7 +36,7 @@ const Game = ({ game, handleonRadioChange, isSubmitted, userSelected }) => {
                 <Typography sx={{ color: "green" }} variant="body1">YOU WIN</Typography>
             }
           </div>}
-          <Typography sx={{ textAlign: "center", color: "grey" }} variant="body">{game?.status?.long === "Finished" ? 'FINAL' : `${new Date(game?.date?.start).toLocaleTimeString()}`}</Typography>
+          <Typography sx={{ textAlign: "center", color: "grey" }} variant="body">{game?.status?.long === "Finished" ? 'FINAL' : `${new Date(game?.date?.start).toLocaleString()}`}</Typography>
 
         </div>
         <label className="visitors-team">
@@ -85,7 +86,7 @@ const Game = ({ game, handleonRadioChange, isSubmitted, userSelected }) => {
                   <Typography sx={{ color: "green" }} variant="body1">YOU WIN</Typography>
               }
             </div>}
-            <Typography sx={{ textAlign: "center", color: "grey" }} variant="body">{game?.status?.long === "Finished" ? 'FINAL' : `${new Date(game?.date?.start).toLocaleTimeString()}`}</Typography>
+            <Typography sx={{ textAlign: "center", color: "grey" }} variant="body">{game?.status?.long === "Finished" ? 'FINAL' : `${new Date(game?.date?.start).toLocaleString()}`}</Typography>
 
           </div>
           <label className="visitors-team">
@@ -133,7 +134,7 @@ const Game = ({ game, handleonRadioChange, isSubmitted, userSelected }) => {
                   <Typography sx={{ color: "green" }} variant="body1">YOU WIN</Typography>
               }
             </div>}
-            <Typography sx={{ textAlign: "center", color: "grey" }} variant="body">{game?.status?.long === "Finished" ? 'FINAL' : `${new Date(game?.date?.start).toLocaleTimeString()}`}</Typography>
+            <Typography sx={{ textAlign: "center", color: "grey" }} variant="body">{game?.status?.long === "Finished" ? 'FINAL' : `${new Date(game?.date?.start).toLocaleString()}`}</Typography>
 
           </div>
           <label className="visitors-team">
