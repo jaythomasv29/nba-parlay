@@ -46,8 +46,7 @@ export const GameContextProvider = ({ children }) => {
             })
           );
           setGames(response.data.response);
-        } else {
-        }
+        } 
       } catch (err) {
         console.log("Error getting season games " + err);
       }
@@ -57,13 +56,8 @@ export const GameContextProvider = ({ children }) => {
 
   // Filter function to get specific games on a current date
   const getGamesByDate = (date) => {
-    return games?.filter((game) => {
-      if (new Date(game.date.start).toDateString() === date.toDateString()) {
-        return game;
-      } else {
-        return null;
-      }
-    });
+    return games.filter((game) => new Date(game.date.start).toDateString() === date.toDateString() ? game : null);
+
   };
 
   const value = {

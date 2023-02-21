@@ -23,13 +23,9 @@ const getGamesOfCurrentSeason = async () => {
 };
 
 const getDailyNBAGames = async (req, res) => {
-  console.log(req.params.date)
   const today = new Date(req.params.date) || new Date();
-  console.log(today)
   const seasonGames = await getGamesOfCurrentSeason();
-  console.log(`${today.getFullYear()}-${today.getMonth()}-${today.getDate()}`);
   const todayGames = seasonGames.response.filter((game) => {
-    const gameDate = new Date(game.date.start);
     if (
       new Date(game.date.start) >
         new Date(
@@ -51,50 +47,63 @@ const getDailyNBAGames = async (req, res) => {
 };
 
 const updateAllParlays = async () => {
-  const parlays = await Parlay.find().lean().exec();
-  const seasonGames = await getGamesOfCurrentSeason();
-  for (let i = 0; i < parlays.length; i++) {
-    const parlay = parlays[i];
-    let partialWins = 0;
-    const gameDate = new Date(parlays[i].createdAt);
-    const specificGamesOnParlayDate = seasonGames.response.filter(
-      (game) =>
-        new Date(game.date.start).toDateString() === gameDate.toDateString() || Object.keys(parlay.parlay).some(gameId => Number(gameId) === game.id)
-    );
-    parlay.isParlay;
-    Object.keys(parlay.parlay).forEach((gameKey) => {
-      const foundGameResult = specificGamesOnParlayDate.find(
-        (g) => g.id == gameKey
+  // Execute database calls in parallel to optimize querying
+  const [parlays, seasonGames] = await Promise.all([
+    Parlay.find().lean().exec(),
+    getGamesOfCurrentSeason(),
+  ]);
+  // Extract game data and combine into parlay data to check if users won any of their picks, if so, also get useful game data to display and store/update database
+  await Promise.all(
+    parlays.map(async (parlay) => {
+      let partialWins = 0;
+      const gameDate = new Date(parlay.createdAt);
+      const specificGamesOnParlayDate = seasonGames.response.filter(
+        (game) =>
+          new Date(game.date.start).toDateString() ===
+            gameDate.toDateString() ||
+          Object.keys(parlay.parlay).some(
+            (gameId) => Number(gameId) === game.id
+          )
       );
-      parlay.parlay[gameKey].scores = foundGameResult?.scores;
-      parlay.parlay[gameKey].teams = foundGameResult?.teams;
-      parlay.parlay[gameKey].date = foundGameResult?.date;
-      if (
-        foundGameResult?.scores.home.points &&
-        foundGameResult?.scores.visitors.points
-      ) {
-        parlay.parlay[gameKey].gameWinner = checkWinner(foundGameResult);
+      parlay.isParlay;
+      await Promise.all(
+        Object.keys(parlay.parlay).map(async (gameKey) => {
+          const foundGameResult = specificGamesOnParlayDate.find(
+            (g) => g.id == gameKey
+          );
+          parlay.parlay[gameKey].scores = foundGameResult?.scores;
+          parlay.parlay[gameKey].teams = foundGameResult?.teams;
+          parlay.parlay[gameKey].date = foundGameResult?.date;
+          if (
+            foundGameResult?.scores.home.points &&
+            foundGameResult?.scores.visitors.points
+          ) {
+            parlay.parlay[gameKey].gameWinner = checkWinner(foundGameResult);
 
-        if (
-          parlay.parlay[gameKey].gameWinner ==
-          Number(parlay.parlay[gameKey].userPick)
-        ) {
-          partialWins++;
+            if (
+              parlay.parlay[gameKey].gameWinner ==
+              Number(parlay.parlay[gameKey].userPick)
+            ) {
+              partialWins++;
+            }
+          }
+        })
+      );
+      parlay.partialWins = partialWins;
+      parlay.isCompleteParlayWinner = Object.keys(parlay.parlay).every(
+        (key) => {
+          return (
+            parlay.parlay[key].gameWinner == Number(parlay.parlay[key].userPick)
+          );
         }
-      }
-    });
-    parlay.partialWins = partialWins;
-    parlay.isCompleteParlayWinner = Object.keys(parlay.parlay).every((key) => {
-      return (
-        parlay.parlay[key].gameWinner == Number(parlay.parlay[key].userPick)
       );
-    });
-    console.log(parlay);
-    await Parlay.findByIdAndUpdate(parlay._id, parlay);
-  }
+      await Parlay.findByIdAndUpdate(parlay._id, parlay);
+    })
+  );
 };
-
+updateAllParlays();
 /**
+ * In production this would routinely run to update all user's parlays, but is commented out due to API CALL limits set by RapidAPI, instead it is called upon server start for testing
  * Update parlays periodically in background
  */
 // updateAllParlays();
@@ -114,7 +123,7 @@ const submitUserParlay = async (req, res) => {
       userId: userId,
       parlay: parlayPicks,
     });
-    updateAllParlays()
+    updateAllParlays();
     res.json(savedParlay);
   } catch (err) {
     console.log("Error saving parlay in database " + err);
@@ -151,5 +160,4 @@ module.exports = {
   submitUserParlay,
   getUserParlayById,
   getAllUserParlays,
-
 };

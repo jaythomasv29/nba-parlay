@@ -3,7 +3,6 @@ const path = require("path");
 const dotenv = require("dotenv").config();
 const cors = require("cors");
 const PORT = process.env.PORT;
-const { getTeamsFromLeague } = require("./axiosConfig");
 
 const teamRoutes = require("./routes/teamRoutes");
 const gameRoutes = require("./routes/gameRoutes");
@@ -36,35 +35,6 @@ if (process.env.NODE_ENV === "production") {
   });
 }
 
-app.get("/saveTeams", async (req, res) => {
-  const teams = await getTeamsFromLeague();
-  // console.log(teams);
-
-  const nbaTeams = teams
-    .filter((team) => {
-      if (
-        team.name &&
-        team.code &&
-        team.city &&
-        team.logo &&
-        team.leagues.standard.conference &&
-        team.nbaFranchise
-      ) {
-        return team;
-      }
-    })
-    .map((team) => {
-      const { id, name, code, city, logo } = team;
-      const conference = team.leagues.standard.conference;
-      return { id, name, code, city, logo, conference, isFavorite: false };
-    });
-  try {
-    const data = await Team.collection.insertMany(nbaTeams);
-    res.json(data);
-  } catch (err) {
-    res.json(err);
-  }
-});
 
 // When strict option is set to true, Mongoose will ensure that only the fields that are specified in your Schema will be saved in the database, and all other fields will not be saved (if some other fields are sent)
 mongoose.set("strictQuery", false);
