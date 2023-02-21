@@ -69,7 +69,7 @@ const Login = () => {
       }
       <form onSubmit={handleLoginUser} className={classes.root}>
 
-        <TextField onChange={handleInputChange} value={loginFormFields.email} label="Email" variant="filled" name="email" type="email" required />
+        <TextField onChange={handleInputChange} value={loginFormFields.email} label="Email" variant="filled" name="email" type="email" required autoComplete='off'/>
 
         <TextField onChange={handleInputChange} value={loginFormFields.password} label="Password" variant="filled" name="password" type="password" required />
 

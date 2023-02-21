@@ -30,7 +30,8 @@ const ParlayHistory = () => {
               bgcolor: 'background.paper',
               position: 'relative',
               overflow: 'auto',
-              maxHeight: 900,
+              maxHeight: 300,
+              ml: 1,
               my: 1,
               '& li': { padding: 0 },
             }}
@@ -39,7 +40,7 @@ const ParlayHistory = () => {
 
             {userParlays && userParlays.map((parlay) => (
               <Link className=" nav-link" to={`/parlays/${parlay._id}`} key={parlay._id}>
-                <ListSubheader sx={{ border: "1px solid lightsmoke", m: 1, cursor: "pointer", "&:hover": { backgroundColor: "lightBlue" } }}>{`${new Date(parlay.createdAt).toDateString()}`}
+                <ListSubheader sx={{ fontSize: "12px", border: "1px solid lightsmoke", m: 0.5, cursor: "pointer", "&:hover": { backgroundColor: "lightBlue" } }}>{`${new Date(parlay.createdAt).toDateString()}`}
                 </ListSubheader>
               </Link>
             ))}

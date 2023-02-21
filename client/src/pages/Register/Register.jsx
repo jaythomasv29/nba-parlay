@@ -72,7 +72,7 @@ const Register = () => {
       }
       <form onSubmit={handleRegisterUser} className={classes.root}>
 
-        <TextField onChange={handleInputChange} value={registerFormFields.email} label="Email" variant="filled" name="email" type="email" required />
+        <TextField onChange={handleInputChange} value={registerFormFields.email} label="Email" variant="filled" name="email" type="email" required autoComplete='off'/>
         <TextField onChange={handleInputChange} value={registerFormFields.password} label="Password" variant="filled" name="password" type="password" required />
         <TextField onChange={handleInputChange} value={registerFormFields.confirmPassword} label="Confirm password" variant="filled" name="confirmPassword" type="password" required />
         <Link className="link" to="/login"><Typography sx={{ color: "#1976D2" }}>Already have an account?</Typography></Link>

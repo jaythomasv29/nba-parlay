@@ -1,5 +1,5 @@
 const express = require("express");
-const path = require('path')
+const path = require("path");
 const dotenv = require("dotenv").config();
 const cors = require("cors");
 const PORT = process.env.PORT;
@@ -9,7 +9,7 @@ const teamRoutes = require("./routes/teamRoutes");
 const gameRoutes = require("./routes/gameRoutes");
 const authRoutes = require("./routes/authRoutes");
 const userRoutes = require("./routes/userRoutes");
-const { default: mongoose } = require("mongoose");
+const mongoose = require("mongoose");
 const connectDB = require("./dbConn");
 const Team = require("./models/Team");
 const cookieParser = require("cookie-parser");
@@ -25,16 +25,15 @@ app.use("/users", userRoutes);
 app.use("/teams", teamRoutes);
 app.use("/games", gameRoutes);
 
-if(process.env.NODE_ENV === "production") {
-
-  app.use(express.static(path.join(__dirname, "../client", "build")))
+if (process.env.NODE_ENV === "production") {
+  app.use(express.static(path.join(__dirname, "../client", "build")));
   app.get("/", (req, res) => {
-    res.sendFile(path.join(__dirname, "../client", "build", "index.html"))
-  })
+    res.sendFile(path.join(__dirname, "../client", "build", "index.html"));
+  });
 } else {
   app.get("/", (req, res) => {
-    res.json("JSON server is working")
-  })
+    res.json("JSON server is working");
+  });
 }
 
 app.get("/saveTeams", async (req, res) => {

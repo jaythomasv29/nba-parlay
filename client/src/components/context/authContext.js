@@ -19,7 +19,7 @@ export const AuthContextProvider = ({ children }) => {
 
   const register = async (formInputs) => {
     console.log("Registering user")
-    const response = await axios.post("api/auth/register", formInputs)
+    const response = await axios.post("auth/register", formInputs)
     setCurrentUser(response.data)
     return response
   }
