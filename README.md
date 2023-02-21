@@ -1,5 +1,8 @@
 # NBA Parlay
 View Deployed Version on AWS EC2 instance [here](http://34.222.48.98:4001/)
+
+* Click on any date to view matches, and select your winning teams to see how your parlay does! Check back each day to see your results auto updated and saved to your user account!
+
 An application that utilizes real-time NBA data from an API that allows for users to create parlays, view team stats, and live scores which are winning picks of each NBA match that is currently going on.
 * The application is split into two main parts, the front end react (client) and the back-end express server that utilizes MongoDB and Mongoose to persist data.
 
